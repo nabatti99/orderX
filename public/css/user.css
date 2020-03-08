@@ -1,0 +1,40 @@
+#section1 {
+  background: rgba(0, 0, 0, 0.4) url("../images/orderX-background.jpg");
+  background-repeat: no-repeat;
+  background-position: top;
+  background-attachment: fixed;
+  background-size: cover;
+  background-blend-mode: darken;
+}
+
+.background-overlay {
+  background: rgba(0, 0, 0, 0.4);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-blend-mode: darken;
+}
+
+/* Collection Link */
+.collection-link {
+	transition: cubic-bezier(0.23, 1, 0.320, 1) 0.2s;
+}
+
+.collection-link:hover {
+  background: rgba(0, 0, 0, 0.25);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+	background-blend-mode: darken;
+	transform: scale(1.05, 1.05);
+}
+
+/* Control Button */
+.control-button {
+  cursor: pointer;
+  transition: cubic-bezier(0.23, 1, 0.320, 1) 0.15s;
+}
+
+.control-button:hover {
+	color: green;
+}

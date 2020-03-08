@@ -1,0 +1,55 @@
+extends layout.pug
+
+block CSS
+  link(rel="stylesheet", href="")
+
+block JS
+  script(src="/js/make-order.js")
+
+block NavItem
+  li.nav-item
+    a(href="/").nav-link HOME
+  li.nav-item.active
+    a(href="/guess").nav-link ORDER
+  li.nav-item
+    a(href="/helper").nav-link HELPER
+
+block Login
+  span.badge.badge-pill.badge-success GUESS
+  span.text-light &nbsp;#{user.name}
+  form(action="/auth/log-out", method="POST")
+    span
+      button.btn.bg-transparent.border-none.p-1
+        i.fal.fa-sign-out.text-success
+
+block Body
+  form.bg-light.container.py-5(action="/item", method="POST")
+    .row.justify-content-center
+      .col-lg-8.col-10
+        h1.text-center.mb-5.display-1 MAKE ORDER
+        .form-group.mb-5
+          label(for="#name") Item name
+          input(type="text", name="name", value= data.name || "", class= classInput.name || "form-control")#name
+          small.text-muted Name of the item you want to order.
+        .form-group.mb-5
+          label(for="#cost")#cost Item Cost
+          input(type="number", name="cost", class= classInput.cost ? classInput.cost : "form-control").form-control
+          small.text-muted The cost of the item you want.
+        .form-group.mb-5
+          label(for="#address")#address Address
+          input(type="text", name="address", class= classInput.address ? classInput.address : "form-control").form-control
+          small.text-muted Where to find the Item.
+        .form-group.mb-4
+          label(for="#helper")#helper Helper
+          select#helper(name="helper").form-control
+            for helper in helpers
+              option(value= helper.id)= helper.name
+          small.text-muted Choose your helper.
+        .form-group
+          button.btn.btn-primary Order
+
+block ToastTitle
+  strong.mr-auto= toastTitle || "Order"
+
+block ToastBody
+  .toast-body= toastBody || "Please fill all information."

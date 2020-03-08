@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="/bootstrap-4.3.1/dist/css/bootstrap.min.css")
+    link(rel="stylesheet", href="/bootstrap-4.3.1/dist/css/transitions.css")
+    link(rel="stylesheet", href="/fontawesome/css/all.min.css")
+    link(rel="stylesheet", href="/css/layout.css")
+    block CSS
+
+    script(src="/bootstrap-4.3.1/dist/js/jquery-3.3.1.slim.min.js")
+    script(src="/bootstrap-4.3.1/dist/js/bootstrap.min.js")
+
+    title orderX - Make order easier.
+  body.bg-secondary
+    nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+      a(href="/").navbar-brand
+        h3.text-center orderX
+      button(data-toggle="collapse", data-target=".collapse").navbar-toggler.ml-auto
+        span.navbar-toggler-icon
+      .collapse.navbar-collapse
+        ul.navbar-nav.m-auto
+          block NavItem
+        block Login
+          
+
+          if (!sessionId.type)
+            a(href="/auth").btn.btn-outline-success.float-right Login
+
+    block Body
+
+    nav.navbar.navbar-expand.navbar-dark.bg-dark.py-0
+      p.inline-block.text-muted.mb-0.mx-5 developed by Minh
+      ul.navbar-nav.ml-auto.mr-5
+        li.nav-item.px-2.border-left.border-right.border-secondary
+          a(href="https://www.facebook.com/nguyenanhminh02/").nav-link
+            i.fab.fa-facebook-f
+        li.nav-item.px-1.border-right.border-secondary
+          a(href="https://github.com/nabatti99").nav-link
+            i.fab.fa-github
+
+    #toast
+      .toast(data-delay="5000").fade.hide
+        .toast-header
+          block ToastTitle
+          small.text-muted from Admin
+          button(data-dismiss="toast").ml-2.mb-1.close
+            span &times;
+        block ToastBody
+
+    script(src="/js/layout.js")
+    block JS

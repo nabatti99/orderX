@@ -1,0 +1,78 @@
+extends layout.pug
+block CSS
+  link(rel="stylesheet", href="css/index.css")
+block JS
+  script(src="/js/user.js")
+block NavItem
+  li.nav-item.active
+    a(href="/").nav-link HOME
+  li.nav-item
+    a(href="/guess").nav-link ORDER
+  li.nav-item
+    a(href="/helper").nav-link HELPER
+
+block Login
+  if (sessionId.type == "Helper")
+    span.badge.badge-pill.badge-warning HELPER
+    span.text-light &nbsp;#{user.name}&nbsp;
+    form(action="/auth/log-out", method="POST")
+      span
+        button.btn.bg-transparent.border-none.p-1
+          i.fal.fa-sign-out.text-success
+
+  if (sessionId.type == "Guess")
+    span.badge.badge-pill.badge-success GUESS
+    span.text-light &nbsp;#{user.name}&nbsp;
+    form(action="/auth/log-out", method="POST")
+      span
+        button.btn.bg-transparent.border-none.p-1
+          i.fal.fa-sign-out.text-success
+
+  if (!sessionId.type)
+    a(href="/auth").btn.btn-outline-success.float-right Login
+
+block Body
+  header.carousel.slide(data-ride="carousel")
+    .carousel-inner
+      .carousel-item.container-fluid.bg-light.pt-5.pl-5.pr-5.active
+        .row.justify-content-center
+          .col-lg-5.col-12.mt-5
+            .row
+              h1.display-2 orderX System
+            .row
+              p.lead.text-muted Make order easier.
+            .row.mt-3.d-lg-block.d-none
+              a(href="/guess").btn.btn-success.rounded-0 GETTING START
+          .col-lg-5.col-12
+            .row.justify-content-center
+              img(src="/images/home images/coffee.svg").w-100.h-100
+      .carousel-item.container-fluid.bg-info.pt-5.pl-5.pr-5
+        .row.justify-content-center
+          .col-lg-5.col-12.mt-5
+            .row
+              h1.display-2.text-white Use It Now
+            .row
+              p.lead.text-light The system is convenient for your team.
+            .row.mt-3.d-lg-block.d-none
+              a(href="/guess").btn.btn-success.rounded-0 GETTING START
+          .col-lg-5.col-12
+            .row.justify-content-center
+              img(src="/images/home images/burger.svg").w-100.h-100
+      .carousel-item.container-fluid.bg-dark.pt-5.pl-5.pr-5
+        .row.justify-content-center
+          .col-lg-5.col-12.mt-5
+            .row
+              h1.display-2.text-light Getting Easier
+            .row
+              p.lead.text-light The system is made by Express JS and use MongoDB to store database.
+            .row.mt-3.d-lg-block.d-none
+              a(href="/guess").btn.btn-success.rounded-0 GETTING START
+          .col-lg-5.col-12
+            .row.justify-content-center
+              img(src="/images/home images/cola.svg").w-100.h-100
+
+block ToastTitle
+  strong.mr-auto= toastTitle || "Admin"
+
+block ToastBody
+  .toast-body= toastBody || "Welcome."

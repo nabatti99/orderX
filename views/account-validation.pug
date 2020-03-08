@@ -1,0 +1,20 @@
+extends layout.pug
+
+block CSS
+
+block JS
+
+block NavItem
+  li.nav-item
+    a(href="/").nav-link HOME
+  li.nav-item
+    a(href="/auth").nav-link ORDER
+  li.nav-item
+    a(href="/auth").nav-link HELPER
+  li.nav-item.active
+    a(href="#").nav-link VALIDATION
+
+block Login
+
+block Body
+  h1.display-1.text-center.bg-light.py-5= message || "Access denied."

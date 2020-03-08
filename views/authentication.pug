@@ -1,0 +1,45 @@
+extends layout.pug
+
+block CSS
+  link(rel="stylesheet", href="/css/authentication.css")
+
+block JS
+  script(src="/js/authentication.js")
+
+block NavItem
+  li.nav-item
+    a(href="/").nav-link HOME
+  li.nav-item
+    a(href="/guess").nav-link ORDER
+  li.nav-item
+    a(href="/helper").nav-link HELPER
+
+block Login
+  .d-none
+
+block Body
+  form.bg-light.container.py-5(action="/auth", method="POST")
+    .row.justify-content-center
+      .col-lg-8.col-10
+        h1.text-center.mb-5.display-1 LOGIN
+        .form-group.mb-5
+          label(for="#username") Username
+          input(type="text", name="username", value= data.username || "", class= classInput.username || "form-control")#username
+          small.text-muted Admin username.
+        .form-group.mb-5
+          label(for="#password", name="password")#password Password
+          input(type="password", name="password", class= classInput.password ? classInput.password : "form-control").form-control
+          small.text-muted Please enter right password.
+        .custom-control.custom-checkbox.mb-4
+          input(type="checkbox", name="isSave")#is-save.custom-control-input
+          label(for="is-save").custom-control-label Remember your password
+        .form-group
+          button.btn.btn-primary Login
+        .form-group
+          a(href="/auth/register") Have no account? Register
+
+block ToastTitle
+  strong.mr-auto= toastTitle || "Login"
+
+block ToastBody
+  .toast-body= toastBody || "Please login first."

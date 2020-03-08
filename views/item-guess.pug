@@ -1,0 +1,54 @@
+extends layout.pug
+
+block CSS
+  link(rel="stylesheet", href="/css/user.css")
+block JS
+  script(src="/js/item.js")
+block NavItem
+  li.nav-item
+    a(href="/").nav-link HOME
+  li.nav-item.active
+    a(href="/guess").nav-link ORDER
+  li.nav-item
+    a(href="/helper").nav-link HELPER
+
+block Login
+  span.badge.badge-pill.badge-success GUESS
+  span.text-light &nbsp;#{user.name}
+  form(action="/auth/log-out", method="POST")
+    span
+      button.btn.bg-transparent.border-none.p-1
+        i.fal.fa-sign-out.text-success
+
+block Body
+  section.container-fluid.d-flex.flex-column.align-items-center#section1.py-5
+    h1.text-white.text-center.display-3 Order Now
+    h3.text-white.text-center.my-3 Let make an order now.
+    form(action="/guess", method="POST").col-lg-5.col-9.my-5
+      .form-row.justify-content-center
+        .col-auto
+          button.btn.btn-outline-light.text-uppercase.rounded-pill Make order now
+
+  section.row.justify-content-center
+    .jumbotron.col-lg-8.col-md-10.col-sm-12.mt-5
+      h1.display-4= item.name
+      p.lead
+        span= `This item cost ${item.cost} VND`
+        span.float-right= `order by ${item.guess.name}`
+      p.lead= `Buy at ${item.address}.`
+      hr.my-4
+      h4.mb-3 Helper information
+      p
+        strong Helper name:&nbsp;
+        span= item.helper.name
+      p
+        strong Email address:&nbsp;
+        span= item.helper.email
+      p
+        strong Phone number:&nbsp;
+        span= item.helper.phoneNumber
+      p
+        strong State:&nbsp;
+        span(class= stateClass)= item.state.message
+      form(action=`./${itemId}`, method="POST")
+        button(class=`btn d-block ml-auto mr-4 ${buttonClass}`)#post-button= buttonMessage

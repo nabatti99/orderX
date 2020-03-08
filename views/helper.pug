@@ -1,0 +1,107 @@
+extends layout.pug
+
+block CSS
+  link(rel="stylesheet", href="/css/user.css")
+block JS
+
+block NavItem
+  li.nav-item
+    a(href="/").nav-link HOME
+  li.nav-item
+    a(href="/guess").nav-link ORDER
+  li.nav-item.active
+    a(href="/helper").nav-link HELPER
+
+block Login
+  span.badge.badge-pill.badge-warning HELPER
+  span.text-light &nbsp;#{user.name}&nbsp;
+  form(action="/auth/log-out", method="POST")
+    span
+      button.btn.bg-transparent.border-none.p-1
+        i.fal.fa-sign-out.text-success
+
+block Body
+  section.container-fluid.d-flex.flex-column.align-items-center#section1.py-5
+    h1.text-white.text-center.display-3 Helper Management App
+    h3.text-white.text-center.my-3 This page is use for helper to manage task.
+
+  section.container-fluid.bg-light.px-5.pb-5.pt-5
+    h1.text-left.text-primary Ordering list:
+    .container-fluid.row.justify-content-around
+      if (itemsOrdered.length == 0)
+        p.lead Nothing here.
+      for item in itemsOrdered
+        .card.col-3.mx-2.my-4
+          .card-body
+            h5.card-title= item.name
+            h6.card-subtitle.mb-2.text-muted= `${item.cost} VND`
+            hr
+            p.card-text
+              strong Helper:&nbsp;
+              span= item.helper.name
+            p.card-text
+              strong Email:&nbsp;
+              span= item.helper.email
+            p.card-text
+              strong Phone:&nbsp;
+              span= item.helper.phoneNumber
+            p.card-text.text-right
+              small.text-muted= item.timePass
+            a(href=`/helper/${item.id}`).card-link View details
+    hr
+
+  section.container-fluid.bg-light.px-5.pb-5
+    h1.text-left.text-primary Pending list:
+    .container-fluid.row.justify-content-around
+      if (itemsPayed.length == 0)
+        p.lead Nothing here.
+      for item in itemsPayed
+        .card.col-3.mx-2.my-4
+          .card-body
+            h5.card-title= item.name
+            h6.card-subtitle.mb-2.text-muted= `${item.cost} VND`
+            hr
+            p.card-text
+              strong Helper:&nbsp;
+              span= item.helper.name
+            p.card-text
+              strong Email:&nbsp;
+              span= item.helper.email
+            p.card-text
+              strong Phone:&nbsp;
+              span= item.helper.phoneNumber
+            p.card-text.text-right
+              small.text-muted= item.timePass
+            a(href=`/helper/${item.id}`).card-link View details
+    hr
+
+  section.container-fluid.bg-light.px-5.pb-5
+    h1.text-left.text-primary Completed list:
+    .container-fluid.row.justify-content-around
+      if (itemsCompleted.length == 0)
+        p.lead Nothing here.
+      for item in itemsCompleted
+        .card.col-3.mx-2.my-4
+          .card-body
+            h5.card-title= item.name
+            h6.card-subtitle.mb-2.text-muted= `${item.cost} VND`
+            hr
+            p.card-text
+              strong Helper:&nbsp;
+              span= item.helper.name
+            p.card-text
+              strong Email:&nbsp;
+              span= item.helper.email
+            p.card-text
+              strong Phone:&nbsp;
+              span= item.helper.phoneNumber
+            p.card-text.text-right
+              small.text-muted= item.timePass
+            a(href=`/helper/${item.id}`).card-link View details
+    hr
+
+block ToastTitle
+  strong.mr-auto= toastTitle || "Admin"
+
+block ToastBody
+  .toast-body= toastBody || "Welcome."

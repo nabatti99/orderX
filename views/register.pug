@@ -1,0 +1,57 @@
+extends layout.pug
+
+block CSS
+  link(rel="stylesheet", href="")
+
+block JS
+  script(src="/js/register.js")
+
+block NavItem
+  li.nav-item
+    a(href="/").nav-link HOME
+  li.nav-item
+    a(href="/auth").nav-link ORDER
+  li.nav-item
+    a(href="/auth").nav-link HELPER
+
+block Login
+  .d-none
+
+block Body
+  form.bg-light.container.py-5(action="/auth/register", method="POST")
+    .row.justify-content-center
+      .col-lg-8.col-10
+        h1.text-center.mb-5.display-1 Register
+        .form-group.mb-5
+          label(for="#username") Username
+          input(type="text", name="username", value= data.username || "", class= classInput.username || "form-control")#username
+          small.text-muted Admin username.
+        .form-group.mb-5
+          label(for="#password", name="password")#password Password
+          input(type="password", name="password", class= classInput.password ? classInput.password : "form-control").form-control
+          small.text-muted Please enter your password.
+        .form-group.mb-5
+          label(for="#name") Name
+          input(type="text", name="name", value= data.name || "", class= classInput.name || "form-control")#name
+          small.text-muted Email address.
+        .form-group.mb-5
+          label(for="#email") Email
+          input(type="text", name="email", value= data.email || "", class= classInput.email || "form-control")#email
+          small.text-muted Email address.
+        .form-group.mb-5
+          label(for="#phone-number") Phone number
+          input(type="text", name="phoneNumber", value= data.phoneNumber || "", class= classInput.phoneNumber || "form-control")#phone-number
+          small.text-muted Your phone number.
+        .form-group.mb-5
+          label(for="#type") Type
+          select#type(name="type").form-control
+            option(value="Guess") Guess
+            option(value="Helper") Helper
+        .form-group
+          button.btn.btn-primary Register
+
+block ToastTitle
+  strong.mr-auto= toastTitle || "Admin"
+
+block ToastBody
+  .toast-body= toastBody || "Please fill all informations."
