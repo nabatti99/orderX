@@ -1,25 +1,51 @@
 const nodemailer = require("nodemailer");
 const {setIntervalAsync} = require("set-interval-async/dynamic");
 const {clearIntervalAsync} = require("set-interval-async");
+const {google} = require("googleapis");
 
-async function sendMail(receiver, content) {
-  let transporter = nodemailer.createTransport({
-    service: "Gmail",
+// Using oauth2 (instruction: https://medium.com/@nickroach_50526/sending-emails-with-node-js-using-smtp-gmail-and-oauth2-316fe9c790a1)
+const OAuth2 = google.auth.OAuth2;
+
+const oauth2Client = new OAuth2(
+  "808636525389-p6l4dbkg33kfh67v5bto6i24qq5lbda7.apps.googleusercontent.com",
+  "i5yjIUe_Q9KfKn0-6y3qMsPZ",
+  "https://developers.google.com/oauthplayground"
+)
+
+oauth2Client.setCredentials({
+  refresh_token: "1//048fk40mvPlwGCgYIARAAGAQSNwF-L9IrAJOgCib15QCDeNzJGqO34u96iOSZWcyc6-oEAwgSP76z6wYbwi5ofFQ378g7XXGkWK4"
+});
+
+const accessToken = oauth2Client.getAccessToken();
+
+const transporterInfo = {
+  service: "Gmail",
     auth: {
+      type: "OAuth2",
       user: "whathtefuch123@gmail.com",
-      pass: "Asd12345"
+      clientId: "808636525389-p6l4dbkg33kfh67v5bto6i24qq5lbda7.apps.googleusercontent.com",
+      clientSecret: "i5yjIUe_Q9KfKn0-6y3qMsPZ",
+      refreshToken: "1//048fk40mvPlwGCgYIARAAGAQSNwF-L9IrAJOgCib15QCDeNzJGqO34u96iOSZWcyc6-oEAwgSP76z6wYbwi5ofFQ378g7XXGkWK4",
+      accessToken: accessToken
     }
-  });
+}
 
-  let info = await transporter.sendMail({
+// using nodemailer
+async function sendMail(receiver, content) {
+  let transporter = await nodemailer.createTransport(transporterInfo);
+
+  const mailOptions = {
     from: 'orderX <whathtefuch123@gmail.com>', // sender address
     to: receiver, // list of receivers
     subject: "[OrderX] Remind to repay to the Helper", // Subject line
-    text: "Nodemailer", // plain text body
+    generateTextFromHTML: true,
     html: content // html body
+  };
+
+  await transporter.sendMail(mailOptions, (error, response) => {
+    error ? console.error(error) : console.log(response);
+    transporter.close();
   });
-  console.log("Message sent: %s", info.messageId);
-  console.log(`Message was sent to ${receiver}.`);
 }
 
 let intervals = [];
@@ -108,21 +134,18 @@ module.exports.sendVerifyMail = async function (receiver, verifyLink) {
   content += "<p>From orderX.</p>";
   content += "</div>";
 
-  let transporter = nodemailer.createTransport({
-    service: "Gmail",
-    auth: {
-      user: "whathtefuch123@gmail.com",
-      pass: "Asd12345"
-    }
-  });
+  let transporter = await nodemailer.createTransport(transporterInfo);
 
-  let info = await transporter.sendMail({
+  const mailOptions = {
     from: 'orderX <whathtefuch123@gmail.com>', // sender address
     to: receiver, // list of receivers
     subject: "[OrderX] Verify your account", // Subject line
-    text: "Nodemailer", // plain text body
+    generateTextFromHTML: true,
     html: content // html body
+  };
+
+  await transporter.sendMail(mailOptions, (error, response) => {
+    error ? console.error(error) : console.log(response);
+    transporter.close();
   });
-  console.log("Message sent: %s", info.messageId);
-  console.log(`Message was sent to ${receiver}.`);
 }
