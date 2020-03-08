@@ -12,7 +12,7 @@ async function sendMail(receiver, content) {
   });
 
   let info = await transporter.sendMail({
-    from: 'NodeMailer', // sender address
+    from: 'orderX <whathtefuch123@gmail.com>', // sender address
     to: receiver, // list of receivers
     subject: "[OrderX] Remind to repay to the Helper", // Subject line
     text: "Nodemailer", // plain text body
@@ -88,6 +88,9 @@ async function setRemind(guess, item, helper) {
       content += `<p><strong>Name:</strong> ${helper.name}</p>`;
       content += `<p><strong>Email:</strong> ${helper.email}</p>`;
       content += `<p><strong>Phone number:</strong> ${helper.phoneNumber}</p>`;
+      content += "<hr>";
+      content += "<p>Thank,</p>";
+      content += "<p>From orderX.</p>";
       content += "</div>";
 
       return content;
@@ -99,7 +102,7 @@ module.exports.setRemind = setRemind;
 module.exports.deleteRemind = deleteRemind;
 module.exports.sendVerifyMail = async function (receiver, verifyLink) {
   let content = "<div>";
-  content += `<p>Hey, did you have registered at <strong>orderX</strong>? If not, you can remove this mail</p>`;
+  content += `<p>Hey, did you have registered at <strong>orderX</strong>? If not, you can remove this mail.</p>`;
   content += `<p><strong>Link to verify:</strong> <a href=${verifyLink}>Verify your account</a>.</p>`;
   content += "<p>Thank,</p>";
   content += "<p>From orderX.</p>";
