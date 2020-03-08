@@ -83,12 +83,12 @@ async function setRemind(guess, item, helper) {
 
     async function info(item) {
       let content = "<div>";
-      content += `<h1>You have been implied ${helper.name} to buy ${item.name} at ${item.address} and it cost ${item.cost} VND, so you should repay money!</h1>`;
+      content += `<h1>Hey ${guess.name}, You have been implied ${helper.name} to buy ${item.name} at ${item.address} and it cost ${item.cost} VND, so you should repay money!</h1>`;
       content += "<h2>Helper information:</h2>";
       content += `<p><strong>Name:</strong> ${helper.name}</p>`;
       content += `<p><strong>Email:</strong> ${helper.email}</p>`;
-      content += `<p><strong>Phone number:</strong> ${helper.phoneNumber}</p>`
-      content += "</div>"
+      content += `<p><strong>Phone number:</strong> ${helper.phoneNumber}</p>`;
+      content += "</div>";
 
       return content;
     }
@@ -99,9 +99,11 @@ module.exports.setRemind = setRemind;
 module.exports.deleteRemind = deleteRemind;
 module.exports.sendVerifyMail = async function (receiver, verifyLink) {
   let content = "<div>";
-  content += `<h1>Did you have registered at <strong>orderX</strong>? If not, you can remove this mail`;
-  content += `<p><strong>Link to verify:</strong> <a href=${verifyLink}>Verify your account</a>.`;
-  content += "</div>"
+  content += `<p>Hey, did you have registered at <strong>orderX</strong>? If not, you can remove this mail</p>`;
+  content += `<p><strong>Link to verify:</strong> <a href=${verifyLink}>Verify your account</a>.</p>`;
+  content += "<p>Thank,</p>";
+  content += "<p>From orderX.</p>";
+  content += "</div>";
 
   let transporter = nodemailer.createTransport({
     service: "Gmail",
@@ -112,7 +114,7 @@ module.exports.sendVerifyMail = async function (receiver, verifyLink) {
   });
 
   let info = await transporter.sendMail({
-    from: 'NodeMailer', // sender address
+    from: 'orderX <whathtefuch123@gmail.com>', // sender address
     to: receiver, // list of receivers
     subject: "[OrderX] Verify your account", // Subject line
     text: "Nodemailer", // plain text body
