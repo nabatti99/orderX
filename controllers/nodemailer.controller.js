@@ -47,7 +47,7 @@ async function setRemind(guess, item, helper) {
           await guess.save();
 
           console.log(priority);
-        }, 20000));
+        }, 60000 * 60 * 2)); // 2 hours
 
         item.save();
       },
@@ -60,7 +60,7 @@ async function setRemind(guess, item, helper) {
           await guess.save();
 
           console.log(priority);
-        }, 10000));
+        }, 60000 * 60)); // 1 hours
 
         item.save();
       },
@@ -73,7 +73,7 @@ async function setRemind(guess, item, helper) {
           await guess.save();
 
           console.log(priority);
-        }, 5000));
+        }, 60000 * 30)); // 30 minutes
 
         item.save();
       }
