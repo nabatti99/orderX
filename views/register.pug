@@ -44,7 +44,7 @@ block Body
           small.text-muted Your phone number.
         .form-group.mb-5
           label(for="#type") Type
-          select#type(name="type").form-control
+          select#type(name="type", class= classInput.type || "form-control")
             option(value="Guess") Guess
             option(value="Helper") Helper
         .form-group
