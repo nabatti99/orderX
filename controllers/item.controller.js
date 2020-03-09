@@ -1,9 +1,11 @@
 const User = require("../models/user.model");
 const nodemailer = require("../controllers/nodemailer.controller");
 
+// render make-order page
 module.exports.makeOrderPost = async function (request, response, next) {
   checkFlag = true;
 
+  // default class of HLTM fields
   let classInput = await {
     name: "form-control is-valid",
     cost: "form-control is-valid",
@@ -13,6 +15,7 @@ module.exports.makeOrderPost = async function (request, response, next) {
 
   await validation(request);
 
+  // check validation
   async function validation(request) {
     for (key in classInput) {
       if (!request.body[key]) {
@@ -22,6 +25,7 @@ module.exports.makeOrderPost = async function (request, response, next) {
     }
   }
 
+  // If check is false -> rerender page
   if(!checkFlag) {
     const helpers = await User.Helper
       .find();
@@ -43,6 +47,7 @@ module.exports.makeOrderPost = async function (request, response, next) {
 
   const guess = response.locals.user;
 
+  // create new item
   const newItem = new User.Item({
     name: request.body.name,
     cost: request.body.cost,
@@ -53,6 +58,7 @@ module.exports.makeOrderPost = async function (request, response, next) {
     isTrue: false
   });
 
+  // set item for "Helper" and "Guess"
   guess.itemsOrdered.push(newItem._id);
   helper.itemsReceived.push(newItem._id);
 

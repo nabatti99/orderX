@@ -31,7 +31,7 @@ block Body
       if (itemsOrdered.length == 0)
         p.lead Nothing here.
       for item in itemsOrdered
-        .card.col-3.mx-2.my-4
+        .card.col-lg-3.col-md-5.col-sm-11.mx-2.my-4
           .card-body
             h5.card-title= item.name
             h6.card-subtitle.mb-2.text-muted= `${item.cost} VND`
@@ -56,7 +56,7 @@ block Body
       if (itemsPayed.length == 0)
         p.lead Nothing here.
       for item in itemsPayed
-        .card.col-3.mx-2.my-4
+        .card.col-lg-3.col-md-5.col-sm-11.mx-2.my-4
           .card-body
             h5.card-title= item.name
             h6.card-subtitle.mb-2.text-muted= `${item.cost} VND`
@@ -81,7 +81,7 @@ block Body
       if (itemsCompleted.length == 0)
         p.lead Nothing here.
       for item in itemsCompleted
-        .card.col-3.mx-2.my-4
+        .card.col-lg-3.col-md-5.col-sm-11.mx-2.my-4
           .card-body
             h5.card-title= item.name
             h6.card-subtitle.mb-2.text-muted= `${item.cost} VND`

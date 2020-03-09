@@ -14,7 +14,7 @@ Guess.get("/:id", GuessController.getItem);
 
 Guess.post("/:id", GuessController.postItem);
 
-// Error (Why?)
+// Error (Why?) If I user this endpoint to post Make-order page, it error
 // Guess.post("/makeOrder", GuessController.makeOrderPost);
 
 module.exports = Guess;

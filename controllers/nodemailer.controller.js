@@ -7,9 +7,9 @@ const {google} = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 
 const oauth2Client = new OAuth2(
-  "808636525389-p6l4dbkg33kfh67v5bto6i24qq5lbda7.apps.googleusercontent.com",
-  "i5yjIUe_Q9KfKn0-6y3qMsPZ",
-  "https://developers.google.com/oauthplayground"
+  "808636525389-p6l4dbkg33kfh67v5bto6i24qq5lbda7.apps.googleusercontent.com", // client_id
+  "i5yjIUe_Q9KfKn0-6y3qMsPZ", // client_secret
+  "https://developers.google.com/oauthplayground" // Authorized redirect URIs (default)
 )
 
 oauth2Client.setCredentials({
@@ -48,6 +48,7 @@ async function sendMail(receiver, content) {
   });
 }
 
+// storage setIntervals Object
 let intervals = [];
 
 async function deleteRemind(item) {
@@ -56,6 +57,7 @@ async function deleteRemind(item) {
 }
 
 async function setRemind(guess, item, helper) {
+  // Detect remind density
   if (guess.violations <= 20)
     setTime("low");
   else if (guess.violations <= 50)
@@ -64,6 +66,7 @@ async function setRemind(guess, item, helper) {
     setTime("high");
 
   async function setTime(priority) {
+    // set up behavior for remind density
     const options = {
       low: async function (email, content) {
         item.remindCode = await intervals.push(setIntervalAsync(async () => {
@@ -105,8 +108,10 @@ async function setRemind(guess, item, helper) {
       }
     }
 
+    // use option
     options[priority](guess.email, await info(item));
 
+    // the function writing content in reminder mail 
     async function info(item) {
       let content = "<div>";
       content += `<h1>Hey ${guess.name}, You have been implied ${helper.name} to buy ${item.name} at ${item.address} and it cost ${item.cost} VND, so you should repay money!</h1>`;
@@ -124,12 +129,13 @@ async function setRemind(guess, item, helper) {
   }
 }
 
+//! If the server restart -> all the reminder will be remove
 module.exports.setRemind = setRemind;
 module.exports.deleteRemind = deleteRemind;
-module.exports.sendVerifyMail = async function (receiver, verifyLink) {
+module.exports.sendVerifyMail = async function (receiver, verifyLink) { // the function sending mail to verify account
   let content = "<div>";
   content += `<p>Hey, did you have registered at <strong>orderX</strong>? If not, you can remove this mail.</p>`;
-  content += `<p><strong>Link to verify:</strong> <a href=${verifyLink}>Verify your account</a>.</p>`;
+  content += `<p><strong>Link to verify:</strong> <a href=${verifyLink}>${verifyLink}</a>.</p>`;
   content += "<p>Thank,</p>";
   content += "<p>From orderX.</p>";
   content += "</div>";

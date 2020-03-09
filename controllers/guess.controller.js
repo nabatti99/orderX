@@ -1,14 +1,18 @@
 const User = require("../models/user.model");
 
+// render "Guess" user page
 module.exports.get = async function (request, response, next) {
+  // use locals varible have been set on previous middware
   const user = response.locals.user;
   const sessionId = response.locals.sessionId;
 
+  // If not a "Guess" user -> redirect to "Heper" page
   if (sessionId.type != "Guess") {
     response.redirect("/helper");
     return;
   }
 
+  // find item that "Guess" user hasn't repayed
   const itemsOrdered = await User.Item
     .find({
       guess: user._id,
@@ -22,6 +26,7 @@ module.exports.get = async function (request, response, next) {
     })
     .exec();
 
+  // find item that "Guess" user has repayed
   const itemsPayed = await User.Item
     .find({
       guess: user._id,
@@ -35,6 +40,7 @@ module.exports.get = async function (request, response, next) {
     })
     .exec();
 
+  // find item that "Guess" user has repayed and "Helper" user has confirm it
   const itemsCompleted = await User.Item
     .find({
       guess: user._id,
@@ -48,6 +54,7 @@ module.exports.get = async function (request, response, next) {
     })
     .exec();
 
+  //! this page hasn't pagination (should add it)
   response.render("guess.pug", {
     user: user,
     itemsOrdered: itemsOrdered,
@@ -60,6 +67,7 @@ module.exports.get = async function (request, response, next) {
   return;
 }
 
+// render make-order page if click "Make order now" button
 module.exports.post = async function (request, response, next) {
   const helpers = await User.Helper
     .find();
@@ -71,6 +79,7 @@ module.exports.post = async function (request, response, next) {
   });
 }
 
+// render view item page
 module.exports.getItem = async function (request, response, next) {
   let itemId = request.params.id;
   const item = await User.Item
@@ -105,6 +114,7 @@ module.exports.getItem = async function (request, response, next) {
   });
 }
 
+// handle when "Guess" user has repayed
 module.exports.postItem = async function (request, response, next) {
   let itemId = request.params.id;
 

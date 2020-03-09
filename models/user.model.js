@@ -5,9 +5,22 @@ const GuessSchema = new Schema ({
   username: String,
   password: String,
   name:String,
-  email: String,
+  email: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    unique: true,
+    required: "Email address is required",
+    validate: [ // use RegEx but I don't know much RegEx (I have copied on internet)
+      function (email) {
+        const regEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        return regEx.test(email);
+      },
+      "Please fill a valid email address"
+    ]
+  },
   phoneNumber: String,
-  violations: {
+  violations: { // number of violations when "Guess" user doesn't repay on time
     type: Number,
     default: 0
   },
@@ -19,7 +32,7 @@ const GuessSchema = new Schema ({
     ref: "Item",
     type: Schema.Types.ObjectId
   }],
-  validationUrl: String,
+  validationUrl: String, // link to verify user account
   validation: {
     type: Boolean,
     default: false
@@ -32,9 +45,22 @@ const HelperSchema = new Schema ({
   username: String,
   password: String,
   name:String,
-  email: String,
+  email: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    unique: true,
+    required: "Email address is required",
+    validate: [ // use RegEx but I don't know much RegEx (I have copied on internet)
+      function (email) {
+        const regEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        return regEx.test(email);
+      },
+      "Please fill a valid email address"
+    ]
+  },
   phoneNumber: String,
-  likes: {
+  likes: { // number of likes from "Guess" user for "Helper" user
     type: Number,
     default: 0
   },
@@ -46,7 +72,7 @@ const HelperSchema = new Schema ({
     ref: "Item",
     type: Schema.Types.ObjectId
   }],
-  validationUrl: String,
+  validationUrl: String, // link to verify user account
   validation: {
     type: Boolean,
     default: false
@@ -59,8 +85,8 @@ const ItemSchema = new Schema ({
   name: String,
   cost: Number,
   address: String,
-  isPayed: Boolean,
-  isTrue: Boolean,
+  isPayed: Boolean, // check if "Guess" user has been repayed
+  isTrue: Boolean, // check if "Helper" user confirm that "Guess" user has repayed
   remindCode: {
     type: Number,
     default: -1
@@ -77,9 +103,14 @@ const ItemSchema = new Schema ({
   timestamps: true
 });
 
+// render time pass on each item
 ItemSchema.virtual("timePass").get(function () {
   const seconds = Math.ceil((Date.now() - Date.parse(this.createdAt)) / 1000);
+
   const minutes = Math.floor(seconds / 60);
+  if (minutes == 0)
+    return `about ${seconds} seconds ago.`;
+
   const hours = Math.floor(minutes / 60);
   if (hours == 0)
     return `about ${minutes} minutes ago.`;
@@ -99,6 +130,7 @@ ItemSchema.virtual("timePass").get(function () {
   return `about ${years} years ago.`
 });
 
+// render message for state of each item
 ItemSchema.virtual("state").get(function () {
   const options = [
     "Not payed yet.",
