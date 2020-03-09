@@ -29,19 +29,19 @@ block Body
         h1.text-center.mb-5.display-1 MAKE ORDER
         .form-group.mb-5
           label(for="#name") Item name
-          input(type="text", name="name", value= data.name || "", class= classInput.name || "form-control")#name
+          input#name(type="text", name="name", value= data.name || "", class= classInput.name || "form-control")
           small.text-muted Name of the item you want to order.
         .form-group.mb-5
           label(for="#cost")#cost Item Cost
-          input(type="number", name="cost", class= classInput.cost ? classInput.cost : "form-control").form-control
+          input(type="number", name="cost", class= classInput.cost ? classInput.cost : "form-control")
           small.text-muted The cost of the item you want.
         .form-group.mb-5
           label(for="#address")#address Address
-          input(type="text", name="address", class= classInput.address ? classInput.address : "form-control").form-control
+          input(type="text", name="address", class= classInput.address ? classInput.address : "form-control")
           small.text-muted Where to find the Item.
         .form-group.mb-4
           label(for="#helper")#helper Helper
-          select#helper(name="helper").form-control
+          select#helper(name="helper", class= classInput.address ? classInput.address : "form-control")
             for helper in helpers
               option(value= helper.id)= helper.name
           small.text-muted Choose your helper.
