@@ -16,7 +16,7 @@
     "express": "^4.17.1",
     "googleapis": "^47.0.0",
     "mongoose": "^5.9.3",
-    "nodemailer": "^6.4.4",
+    "nodemailer": "^6.4.16",
     "pug": "^2.0.4",
     "set-interval-async": "^1.0.30"
   },
